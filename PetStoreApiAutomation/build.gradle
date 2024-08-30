@@ -1,0 +1,42 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "net.serenity-bdd:serenity-gradle-plugin:4.1.14"
+    }
+}
+
+plugins {
+    id 'java'
+    id 'eclipse'
+}
+
+apply plugin: "net.serenity-bdd.serenity-gradle-plugin"
+
+ext {
+    serenityVersion = '4.1.20'
+}
+
+defaultTasks 'clean', 'test', 'aggregate'
+
+repositories{
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation "junit:junit:4.13.2"
+    implementation "net.serenity-bdd:serenity-junit:${serenityVersion}"
+    implementation "net.serenity-bdd:serenity-core:${serenityVersion}"
+    implementation "net.serenity-bdd:serenity-rest-assured:${serenityVersion}"
+    implementation "net.serenity-bdd:serenity-cucumber:${serenityVersion}"
+    implementation 'com.google.code.gson:gson:2.11.0'
+}
+
+test {
+    useJUnit()
+}
+
+gradle.startParameter.continueOnFailure = true
